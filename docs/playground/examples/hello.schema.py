@@ -1,8 +1,8 @@
-import graphene
+import grapheneold
 
-class Query(graphene.ObjectType):
-    hello = graphene.String()
-    ping = graphene.String(to=graphene.String())
+class Query(grapheneold.ObjectType):
+    hello = grapheneold.String()
+    ping = grapheneold.String(to=grapheneold.String())
 
     def resolve_hello(self, args, info):
         return 'World'
@@ -10,4 +10,4 @@ class Query(graphene.ObjectType):
     def resolve_ping(self, args, info):
         return 'Pinging {}'.format(args.get('to'))
 
-schema = graphene.Schema(query=Query)
+schema = grapheneold.Schema(query=Query)

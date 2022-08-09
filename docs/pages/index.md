@@ -1,19 +1,19 @@
 ---
 path: /
 ---
-<div class="starwars-example-wrapper"><a class="starwars-example" href="http://swapi.graphene-python.org/">Check our Django Starwars API example!</a></div>
+<div class="starwars-example-wrapper"><a class="starwars-example" href="http://swapi.grapheneold-python.org/">Check our Django Starwars API example!</a></div>
 
 
 <div>
 <div class="homepage-intro">
 
-## Meet Graphene
+## Meet grapheneold
 
-Graphene is a Python library for building *GraphQL* schemas/types fast and easily.
+grapheneold is a Python library for building *GraphQL* schemas/types fast and easily.
 
 
-* **Easy to use**: Graphene helps you use *GraphQL* in Python easily.
-* Graphene has **builtin support for Relay**.
+* **Easy to use**: grapheneold helps you use *GraphQL* in Python easily.
+* grapheneold has **builtin support for Relay**.
 * Support for **Django**, **SQLAlchemy** and **GAE**: mapping the models automatically to *GraphQL* types.
 
 </div>
@@ -21,15 +21,15 @@ Graphene is a Python library for building *GraphQL* schemas/types fast and easil
 <div class="homepage-schema">
 
 ```python
-import graphene
+import grapheneold
 
-class Query(graphene.ObjectType):
-    hello = graphene.String()
+class Query(grapheneold.ObjectType):
+    hello = grapheneold.String()
 
     def resolve_hello(self, args, info):
         return 'world'
 
-schema = graphene.Schema(query=Query)
+schema = grapheneold.Schema(query=Query)
 ```
 
 

@@ -1,8 +1,8 @@
 SECRET_KEY = 1
 
 INSTALLED_APPS = [
-    'graphene.contrib.django',
-    'graphene.contrib.django.tests',
+    'grapheneold.contrib.django',
+    'grapheneold.contrib.django.tests',
     'examples.starwars_django',
 ]
 

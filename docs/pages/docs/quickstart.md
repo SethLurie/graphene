@@ -1,6 +1,6 @@
 ---
 title: Getting started
-description: A Quick guide to Graphene
+description: A Quick guide to grapheneold
 ---
 
 # Getting started
@@ -11,13 +11,13 @@ Let's build a basic GraphQL schema from scratch.
 ## Requirements
 
 - Python (2.7, 3.2, 3.3, 3.4, 3.5, pypy)
-- Graphene (0.10+)
+- grapheneold (0.10+)
 
 
 ## Project setup
 
 ```bash
-pip install graphene
+pip install grapheneold
 ```
 
 ## Creating a basic Schema
@@ -28,15 +28,15 @@ We are going to create a very simple schema, with a `Query` with only one field:
 
 
 ```python
-import graphene
+import grapheneold
 
-class Query(graphene.ObjectType):
-    hello = graphene.String()
+class Query(grapheneold.ObjectType):
+    hello = grapheneold.String()
 
     def resolve_hello(self, args, info):
         return 'World'
 
-schema = graphene.Schema(query=Query)
+schema = grapheneold.Schema(query=Query)
 ```
 
 
@@ -49,4 +49,4 @@ result = schema.execute('{ hello }')
 print result.data['hello'] # "World"
 ```
 
-Congrats! You got your first graphene schema working!
+Congrats! You got your first grapheneold schema working!

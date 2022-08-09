@@ -16,7 +16,7 @@ if (typeof PUBLIC_PATH === "undefined") {
 }
 
 pypyjs_vm.rootURL = `${PUBLIC_PATH}/playground/lib/`;
-pypyjs_vm.cacheKey = 'graphene';
+pypyjs_vm.cacheKey = 'grapheneold';
 
 CodeMirror.registerHelper('lint', 'python', function (text, options, editor) {
   return (options.errors || []).map((error) => {
@@ -65,7 +65,7 @@ class Playground extends React.Component {
 
     this.pypyjs = this.pypy_interpreter.ready().then(() => {
       return this.pypy_interpreter.exec(`
-import graphene
+import grapheneold
 import js
 from collections import OrderedDict
 from graphql.core.execution.executor import Executor
@@ -85,7 +85,7 @@ class TrackResolver(SynchronousExecutionMiddleware):
             js.globals.markLine(line-3)
         return SynchronousExecutionMiddleware.run_resolve_fn(resolver, original_resolver)
 
-__graphene_executor = Executor([TrackResolver()], map_type=OrderedDict)
+__grapheneold_executor = Executor([TrackResolver()], map_type=OrderedDict)
 `);
     }).then(() => {
       this.createSchema(this.props.initialSchema);
@@ -100,7 +100,7 @@ __graphene_executor = Executor([TrackResolver()], map_type=OrderedDict)
     this.editor = CodeMirror(ReactDOM.findDOMNode(this.refs.schemaCode), {
       value: this.props.initialSchema,
       mode:  "python",
-      theme: "graphene",
+      theme: "grapheneold",
       lineNumbers: true,
       tabSize: 4,
       indentUnit: 4,
@@ -188,7 +188,7 @@ assert schema, 'You have to define a schema'
     return this.pypyjs.then(() => {
       var x = `
 import json
-result = __graphene_executor.execute(schema.schema, '''${query}''')
+result = __grapheneold_executor.execute(schema.schema, '''${query}''')
 result_dict = {};
 if result.errors:
   result_dict['errors'] = [format_error(e) for e in result.errors]

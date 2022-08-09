@@ -1,7 +1,7 @@
 Example Flask+SQLAlchemy Project
 ================================
 
-This example project demos integration between Graphene, Flask and SQLAlchemy.
+This example project demos integration between grapheneold, Flask and SQLAlchemy.
 The project contains two models, one named `Department` and another
 named `Employee`.
 
@@ -9,12 +9,12 @@ Getting started
 ---------------
 
 First you'll need to get the source of the project. Do this by cloning the
-whole Graphene repository:
+whole grapheneold repository:
 
 ```bash
 # Get the example project code
-git clone https://github.com/graphql-python/graphene.git
-cd graphene/examples/flask_sqlalchemy
+git clone https://github.com/graphql-python/grapheneold.git
+cd grapheneold/examples/flask_sqlalchemy
 ```
 
 It is good idea (but not required) to create a virtual environment

@@ -1,5 +1,5 @@
 import React from 'react';
-import GraphenePlayground from './GraphenePlayground';
+import grapheneoldPlayground from './grapheneoldPlayground';
 
 import _ from 'lodash';
 
@@ -114,7 +114,7 @@ class Playground extends React.Component {
     router.replaceWith(routeName, params, queryParams);
   }
   render() {
-    return (<GraphenePlayground
+    return (<grapheneoldPlayground
       initialSchema={this.state.initialSchema}
       initialQuery={this.state.initialQuery}
       onEditSchema={(source) => {

@@ -1,6 +1,6 @@
 ---
 title: Tips
-description: Tips when SQLAlchemy in Graphene
+description: Tips when SQLAlchemy in grapheneold
 ---
 
 # Tips
@@ -9,10 +9,10 @@ description: Tips when SQLAlchemy in Graphene
 
 For make querying to the database work, there are two alternatives:
 
-* Expose the db session when you create the `graphene.Schema`:
+* Expose the db session when you create the `grapheneold.Schema`:
 
 ```python
-schema = graphene.Schema(session=session)
+schema = grapheneold.Schema(session=session)
 ```
 
 * Create a query for the models.

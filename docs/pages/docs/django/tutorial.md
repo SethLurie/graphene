@@ -1,15 +1,15 @@
 ---
 title: Quickstart
-description: A Quick guide to Graphene in Django
+description: A Quick guide to grapheneold in Django
 ---
 
 # Django Tutorial
 
-Graphene has a number of additional features that are designed to make
+grapheneold has a number of additional features that are designed to make
 working with Django *really simple*.
 
 **Note: The code in this quickstart is pulled from the
-[cookbook example app](https://github.com/graphql-python/graphene/tree/master/examples/cookbook_django)**.
+[cookbook example app](https://github.com/graphql-python/grapheneold/tree/master/examples/cookbook_django)**.
 
 
 ## Setup the Django project
@@ -28,9 +28,9 @@ cd cookbook
 virtualenv env
 source env/bin/activate  # On Windows use `env\Scripts\activate`
 
-# Install Django and Graphene with Django support
+# Install Django and grapheneold with Django support
 pip install django
-pip install graphene[django]
+pip install grapheneold[django]
 pip install django-graphiql
 
 # Set up a new project with a single application
@@ -76,7 +76,7 @@ class Ingredient(models.Model):
 
 GraphQL presents your objects to the world as a graph structure rather than a more
 hierarchical structure to which you may be accustomed. In order to create this
-representation, Graphene needs to know about each *type* of object which will appear in
+representation, grapheneold needs to know about each *type* of object which will appear in
 the graph.
 
 This graph also has a *root type* through which all access begins. This is the `Query` class below.
@@ -87,14 +87,14 @@ Create `cookbook/ingredients/schema.py` and type the following:
 
 ```python
 # cookbook/ingredients/schema.py
-from graphene import relay, ObjectType
-from graphene.contrib.django.filter import DjangoFilterConnectionField
-from graphene.contrib.django.types import DjangoNode
+from grapheneold import relay, ObjectType
+from grapheneold.contrib.django.filter import DjangoFilterConnectionField
+from grapheneold.contrib.django.types import DjangoNode
 
 from cookbook.ingredients.models import Category, Ingredient
 
 
-# Graphene will automatically map the Category model's fields onto the CategoryNode.
+# grapheneold will automatically map the Category model's fields onto the CategoryNode.
 # This is configured in the CategoryNode's Meta class (as you can see below)
 class CategoryNode(DjangoNode):
     class Meta:
@@ -143,7 +143,7 @@ queries.
 Create the parent project-level `cookbook/schema.py`:
 
 ```python
-import graphene
+import grapheneold
 
 import cookbook.ingredients.schema
 
@@ -153,7 +153,7 @@ class Query(cookbook.ingredients.schema.Query):
     # as we begin to add more apps to our project
     pass
 
-schema = graphene.Schema(name='Cookbook Schema')
+schema = grapheneold.Schema(name='Cookbook Schema')
 schema.query = Query
 ```
 
@@ -167,7 +167,7 @@ a web-based integrated development environment to assist in the writing and
 executing of GraphQL queries. It will provide us with a simple and easy way
 of testing our cookbook project.
 
-Add `ingredients`, `graphene.contrib.django` and `django_graphiql` to
+Add `ingredients`, `grapheneold.contrib.django` and `django_graphiql` to
 `INSTALLED_APPS` in `cookbook/settings.py`:
 
 ```python
@@ -176,7 +176,7 @@ INSTALLED_APPS = [
     'django_graphiql',
 
     # This will also make the `graphql_schema` management command available
-    'graphene.contrib.django',
+    'grapheneold.contrib.django',
 
     # Install the ingredients app
     'ingredients',
@@ -187,7 +187,7 @@ INSTALLED_APPS = [
 ## Creating GraphQL and GraphiQL views
 
 Unlike a RESTful API, there is only a single URL from which GraphQL is accessed.
-Requests to this URL are handled by Graphene's `GraphQLView` view.
+Requests to this URL are handled by grapheneold's `GraphQLView` view.
 
 Additionally, we'll add a URL for aforementioned GraphiQL, and for the Django admin
 interface (the latter can be useful for creating test data).
@@ -197,7 +197,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.decorators.csrf import csrf_exempt
 
-from graphene.contrib.django.views import GraphQLView
+from grapheneold.contrib.django.views import GraphQLView
 
 from cookbook.schema import schema
 
@@ -220,7 +220,7 @@ python manage.py migrate
 ## Load some test data
 
 Now is a good time to load up some test data. The easiest option will be to
-[download the ingredients.json](https://raw.githubusercontent.com/graphql-python/graphene/master/examples/cookbook_django/cookbook/ingredients/fixtures/ingredients.json)
+[download the ingredients.json](https://raw.githubusercontent.com/graphql-python/grapheneold/master/examples/cookbook_django/cookbook/ingredients/fixtures/ingredients.json)
 fixture and place it in
 `cookbook/ingredients/fixtures/ingredients.json`. You can then run the following:
 
@@ -267,7 +267,7 @@ a specific ingredient:
 
 ```graphql
 query {
-  # Graphene creates globally unique IDs for all objects.
+  # grapheneold creates globally unique IDs for all objects.
   # You may need to copy this value from the results of the first query
   ingredient(id: "SW5ncmVkaWVudE5vZGU6MQ==") {
     name

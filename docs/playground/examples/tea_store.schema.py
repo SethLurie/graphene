@@ -1,8 +1,8 @@
-import graphene
+import grapheneold
 
-class Tea(graphene.ObjectType):
-    name = graphene.String()
-    steeping_time = graphene.Int()
+class Tea(grapheneold.ObjectType):
+    name = grapheneold.String()
+    steeping_time = grapheneold.Int()
 
 TEAS = [
     Tea(name='Earl Grey Blue Star', steeping_time=5),
@@ -18,8 +18,8 @@ TEAS = [
     Tea(name='Sencha Makoto', steeping_time=3),
 ]
 
-class Store(graphene.ObjectType):
-    teas = graphene.List(Tea, order_by=graphene.String())
+class Store(grapheneold.ObjectType):
+    teas = grapheneold.List(Tea, order_by=grapheneold.String())
 
     def resolve_teas(self, args, info):
         order_by = args.get("order_by")
@@ -29,10 +29,10 @@ class Store(graphene.ObjectType):
             return sorted(self.teas, key=lambda tea: tea.name)
         return self.teas
 
-class Query(graphene.ObjectType):
-    store = graphene.Field(Store)
+class Query(grapheneold.ObjectType):
+    store = grapheneold.Field(Store)
 
     def resolve_store(self, args, info):
         return Store(teas=TEAS) 
 
-schema = graphene.Schema(query=Query)
+schema = grapheneold.Schema(query=Query)

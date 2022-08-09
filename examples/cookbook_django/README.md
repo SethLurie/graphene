@@ -1,7 +1,7 @@
 Cookbook Example Django Project
 ===============================
 
-This example project demos integration between Graphene and Django.
+This example project demos integration between grapheneold and Django.
 The project contains two apps, one named `ingredients` and another
 named `recepies`.
 
@@ -9,12 +9,12 @@ Getting started
 ---------------
 
 First you'll need to get the source of the project. Do this by cloning the
-whole Graphene repository:
+whole grapheneold repository:
 
 ```bash
 # Get the example project code
-git clone https://github.com/graphql-python/graphene.git
-cd graphene/examples/cookbook
+git clone https://github.com/graphql-python/grapheneold.git
+cd grapheneold/examples/cookbook
 ```
 
 It is good idea (but not required) to create a virtual environment
@@ -60,5 +60,5 @@ Now you should be ready to start the server:
 Now head on over to
 [http://127.0.0.1:8000/graphiql](http://127.0.0.1:8000/graphiql)
 and run some queries!
-(See the [Django quickstart guide](http://graphene-python.org/docs/quickstart-django/)
+(See the [Django quickstart guide](http://grapheneold-python.org/docs/quickstart-django/)
 for some example queries)

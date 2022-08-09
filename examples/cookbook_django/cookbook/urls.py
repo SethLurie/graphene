@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.views.decorators.csrf import csrf_exempt
 
 from cookbook.schema import schema
-from graphene.contrib.django.views import GraphQLView
+from grapheneold.contrib.django.views import GraphQLView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

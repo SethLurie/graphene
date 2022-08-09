@@ -1,12 +1,12 @@
-import graphene
-from graphene import relay
-from graphene.contrib.sqlalchemy import (SQLAlchemyConnectionField,
+import grapheneold
+from grapheneold import relay
+from grapheneold.contrib.sqlalchemy import (SQLAlchemyConnectionField,
                                          SQLAlchemyNode)
 from models import Department as DepartmentModel
 from models import Employee as EmployeeModel
 from models import Role as RoleModel
 
-schema = graphene.Schema()
+schema = grapheneold.Schema()
 
 
 @schema.register
@@ -31,7 +31,7 @@ class Role(SQLAlchemyNode):
         identifier = 'role_id'
 
 
-class Query(graphene.ObjectType):
+class Query(grapheneold.ObjectType):
     node = relay.NodeField(Employee)
     all_employees = SQLAlchemyConnectionField(Employee)
     all_roles = SQLAlchemyConnectionField(Role)

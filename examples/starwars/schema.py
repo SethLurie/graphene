@@ -1,20 +1,20 @@
-import graphene
-from graphene import resolve_only_args
+import grapheneold
+from grapheneold import resolve_only_args
 
 from .data import get_character, get_droid, get_hero, get_human
 
 
-class Episode(graphene.Enum):
+class Episode(grapheneold.Enum):
     NEWHOPE = 4
     EMPIRE = 5
     JEDI = 6
 
 
-class Character(graphene.Interface):
-    id = graphene.ID()
-    name = graphene.String()
-    friends = graphene.List('Character')
-    appears_in = graphene.List(Episode)
+class Character(grapheneold.Interface):
+    id = grapheneold.ID()
+    name = grapheneold.String()
+    friends = grapheneold.List('Character')
+    appears_in = grapheneold.List(Episode)
 
     def resolve_friends(self, args, *_):
         # The character friends is a list of strings
@@ -22,22 +22,22 @@ class Character(graphene.Interface):
 
 
 class Human(Character):
-    home_planet = graphene.String()
+    home_planet = grapheneold.String()
 
 
 class Droid(Character):
-    primary_function = graphene.String()
+    primary_function = grapheneold.String()
 
 
-class Query(graphene.ObjectType):
-    hero = graphene.Field(Character,
-                          episode=graphene.Argument(Episode)
+class Query(grapheneold.ObjectType):
+    hero = grapheneold.Field(Character,
+                          episode=grapheneold.Argument(Episode)
                           )
-    human = graphene.Field(Human,
-                           id=graphene.String()
+    human = grapheneold.Field(Human,
+                           id=grapheneold.String()
                            )
-    droid = graphene.Field(Droid,
-                           id=graphene.String()
+    droid = grapheneold.Field(Droid,
+                           id=grapheneold.String()
                            )
 
     @resolve_only_args
@@ -53,4 +53,4 @@ class Query(graphene.ObjectType):
         return get_droid(id)
 
 
-Schema = graphene.Schema(query=Query)
+Schema = grapheneold.Schema(query=Query)

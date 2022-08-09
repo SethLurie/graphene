@@ -1,14 +1,14 @@
 ---
 title: Tutorial
-description: Using SQLAlchemy with Graphene
+description: Using SQLAlchemy with grapheneold
 ---
 
 # SQLAlchemy + Flask Tutorial
 
-Graphene comes with builtin support to SQLAlchemy, which makes quite easy to operate with your current models.
+grapheneold comes with builtin support to SQLAlchemy, which makes quite easy to operate with your current models.
 
 **Note: The code in this tutorial is pulled from the
-[Flask SQLAlchemy example app](https://github.com/graphql-python/graphene/tree/master/examples/flask_sqlalchemy)**.
+[Flask SQLAlchemy example app](https://github.com/graphql-python/grapheneold/tree/master/examples/flask_sqlalchemy)**.
 
 
 ## Setup the Project
@@ -24,9 +24,9 @@ cd flask_sqlalchemy
 virtualenv env
 source env/bin/activate  # On Windows use `env\Scripts\activate`
 
-# SQLAlchemy and Graphene with SQLAlchemy support
+# SQLAlchemy and grapheneold with SQLAlchemy support
 pip install SQLAlchemy
-pip install graphene[sqlalchemy]
+pip install grapheneold[sqlalchemy]
 
 # Install Flask and GraphQL Flask for exposing the schema through HTTP
 pip install Flask
@@ -77,7 +77,7 @@ class Employee(Base):
 
 GraphQL presents your objects to the world as a graph structure rather than a more
 hierarchical structure to which you may be accustomed. In order to create this
-representation, Graphene needs to know about each *type* of object which will appear in
+representation, grapheneold needs to know about each *type* of object which will appear in
 the graph.
 
 This graph also has a *root type* through which all access begins. This is the `Query` class below.
@@ -88,12 +88,12 @@ Create `flask_sqlalchemy/schema.py` and type the following:
 
 ```python
 # flask_sqlalchemy/schema.py
-import graphene
-from graphene import relay
-from graphene.contrib.sqlalchemy import SQLAlchemyNode, SQLAlchemyConnectionField
+import grapheneold
+from grapheneold import relay
+from grapheneold.contrib.sqlalchemy import SQLAlchemyNode, SQLAlchemyConnectionField
 from models import db_session, Department as DepartmentModel, Employee as EmployeeModel
 
-schema = graphene.Schema()
+schema = grapheneold.Schema()
 
 
 @schema.register
@@ -108,7 +108,7 @@ class Employee(SQLAlchemyNode):
         model = EmployeeModel
 
 
-class Query(graphene.ObjectType):
+class Query(grapheneold.ObjectType):
     node = relay.NodeField()
     all_employees = SQLAlchemyConnectionField(Employee)
 

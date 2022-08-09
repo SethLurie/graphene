@@ -18,10 +18,10 @@ This example model defines a `Query` type, which has a reverse field that revers
 argument using the `resolve_reverse` method in the class.
 
 ```python
-import graphene
+import grapheneold
 
-class Query(graphene.ObjectType):
-    reverse = graphene.String(word=graphene.String())
+class Query(grapheneold.ObjectType):
+    reverse = grapheneold.String(word=grapheneold.String())
 
     def resolve_reverse(self, args, info):
         word = args.get('word')
@@ -33,14 +33,14 @@ class Query(graphene.ObjectType):
 A field could also specify a custom resolver outside the class:
 
 ```python
-import graphene
+import grapheneold
 
 def reverse(root, args, info):
     word = args.get('word')
     return word[::-1]
 
-class Query(graphene.ObjectType):
-    reverse = graphene.String(word=graphene.String(), resolver=reverse)
+class Query(grapheneold.ObjectType):
+    reverse = grapheneold.String(word=grapheneold.String(), resolver=reverse)
 ```
 
 
@@ -50,8 +50,8 @@ A query in a GraphQL schema could have some context that we can use in any resol
 In this case we need to decorate the resolver function with `with_context`.
 
 ```python
-class Query(graphene.ObjectType):
-    name = graphene.String()
+class Query(grapheneold.ObjectType):
+    name = grapheneold.String()
 
     @with_context
     def resolve_name(self, args, context, info):

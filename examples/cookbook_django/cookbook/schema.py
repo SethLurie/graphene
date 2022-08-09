@@ -1,9 +1,9 @@
 import cookbook.ingredients.schema
-import graphene
+import grapheneold
 
 
 class Query(cookbook.ingredients.schema.Query):
     pass
 
-schema = graphene.Schema(name='Cookbook Schema')
+schema = grapheneold.Schema(name='Cookbook Schema')
 schema.query = Query

@@ -1,38 +1,38 @@
-|Graphene Logo| `Graphene <http://graphene-python.org>`__ |Build Status| |PyPI version| |Coverage Status|
+|grapheneold Logo| `grapheneold <http://grapheneold-python.org>`__ |Build Status| |PyPI version| |Coverage Status|
 =========================================================================================================
 
-`Graphene <http://graphene-python.org>`__ is a Python library for
+`grapheneold <http://grapheneold-python.org>`__ is a Python library for
 building GraphQL schemas/types fast and easily.
 
--  **Easy to use:** Graphene helps you use GraphQL in Python without
+-  **Easy to use:** grapheneold helps you use GraphQL in Python without
    effort.
--  **Relay:** Graphene has builtin support for Relay
--  **Django:** Automatic *Django model* mapping to Graphene Types. Check
+-  **Relay:** grapheneold has builtin support for Relay
+-  **Django:** Automatic *Django model* mapping to grapheneold Types. Check
    a fully working
-   `Django <http://github.com/graphql-python/swapi-graphene>`__
+   `Django <http://github.com/graphql-python/swapi-grapheneold>`__
    implementation
 
-Graphene also supports *SQLAlchemy*!
+grapheneold also supports *SQLAlchemy*!
 
 *What is supported in this Python version?* **Everything**: Interfaces,
 ObjectTypes, Scalars, Unions and Relay (Nodes, Connections), in addition
 to queries, mutations and subscriptions.
 
-**NEW**!: `Try graphene
-online <http://graphene-python.org/playground/>`__
+**NEW**!: `Try grapheneold
+online <http://grapheneold-python.org/playground/>`__
 
 Installation
 ------------
 
-For instaling graphene, just run this command in your shell
+For instaling grapheneold, just run this command in your shell
 
 .. code:: bash
 
-    pip install graphene
+    pip install grapheneold
     # In case of need Django model support
-    pip install graphene[django]
+    pip install grapheneold[django]
     # Or in case of need SQLAlchemy support
-    pip install graphene[sqlalchemy]
+    pip install grapheneold[sqlalchemy]
 
 Examples
 --------
@@ -41,10 +41,10 @@ Here is one example for get you started:
 
 .. code:: python
 
-    class Query(graphene.ObjectType):
-        hello = graphene.String(description='A typical hello world')
-        ping = graphene.String(description='Ping someone',
-                               to=graphene.String())
+    class Query(grapheneold.ObjectType):
+        hello = grapheneold.String(description='A typical hello world')
+        ping = grapheneold.String(description='Ping someone',
+                               to=grapheneold.String())
 
         def resolve_hello(self, args, info):
             return 'World'
@@ -52,9 +52,9 @@ Here is one example for get you started:
         def resolve_ping(self, args, info):
             return 'Pinging {}'.format(args.get('to'))
 
-    schema = graphene.Schema(query=Query)
+    schema = grapheneold.Schema(query=Query)
 
-Then Querying ``graphene.Schema`` is as simple as:
+Then Querying ``grapheneold.Schema`` is as simple as:
 
 .. code:: python
 
@@ -92,10 +92,10 @@ After developing, the full test suite can be evaluated by running:
 
     python setup.py test # Use --pytest-args="-v -s" for verbose mode
 
-.. |Graphene Logo| image:: http://graphene-python.org/favicon.png
-.. |Build Status| image:: https://travis-ci.org/graphql-python/graphene.svg?branch=master
-   :target: https://travis-ci.org/graphql-python/graphene
-.. |PyPI version| image:: https://badge.fury.io/py/graphene.svg
-   :target: https://badge.fury.io/py/graphene
-.. |Coverage Status| image:: https://coveralls.io/repos/graphql-python/graphene/badge.svg?branch=master&service=github
-   :target: https://coveralls.io/github/graphql-python/graphene?branch=master
+.. |grapheneold Logo| image:: http://grapheneold-python.org/favicon.png
+.. |Build Status| image:: https://travis-ci.org/graphql-python/grapheneold.svg?branch=master
+   :target: https://travis-ci.org/graphql-python/grapheneold
+.. |PyPI version| image:: https://badge.fury.io/py/grapheneold.svg
+   :target: https://badge.fury.io/py/grapheneold
+.. |Coverage Status| image:: https://coveralls.io/repos/graphql-python/grapheneold/badge.svg?branch=master&service=github
+   :target: https://coveralls.io/github/graphql-python/grapheneold?branch=master

@@ -1,20 +1,20 @@
-import graphene
+import grapheneold
 
 
-class Patron(graphene.ObjectType):
-    id = graphene.ID()
-    name = graphene.String()
-    age = graphene.ID()
+class Patron(grapheneold.ObjectType):
+    id = grapheneold.ID()
+    name = grapheneold.String()
+    age = grapheneold.ID()
 
 
-class Query(graphene.ObjectType):
+class Query(grapheneold.ObjectType):
 
-    patron = graphene.Field(Patron)
+    patron = grapheneold.Field(Patron)
 
     def resolve_patron(self, args, info):
         return Patron(id=1, name='Demo')
 
-schema = graphene.Schema(query=Query)
+schema = grapheneold.Schema(query=Query)
 query = '''
     query something{
       patron {

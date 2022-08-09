@@ -17,19 +17,19 @@ class Template extends React.Component {
             <span><Link to="/playground/" className={path.indexOf('/playground')==0?"active":null}>Try it out</Link></span>
             <span><Link to="/docs/quickstart/" className={path.indexOf('/docs')==0?"active":null}>Docs</Link></span>
             <span><Link to="/community/">Community</Link></span>
-            <a href="https://github.com/graphql-python/graphene/">Github</a>
+            <a href="https://github.com/graphql-python/grapheneold/">Github</a>
         </Menu>
         <header className="header">
             <div className="header-wrapper">
                 <Link className="header-logo" to="/">
                     <Icon src={logo} />
-                    Graphene
+                    grapheneold
                 </Link>
                 <nav className="header-nav">
                     <Link to="/playground/" className={path.indexOf('/playground')==0?"active":null}>Try it out</Link>
                     <Link to="/docs/quickstart/" className={path.indexOf('/docs')==0?"active":null}>Docs</Link>
                     <Link to="/community/">Community</Link>
-                    <a href="https://github.com/graphql-python/graphene/">Github</a>
+                    <a href="https://github.com/graphql-python/grapheneold/">Github</a>
                 </nav>
             </div>
             {isIndex?

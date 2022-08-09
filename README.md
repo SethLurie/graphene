@@ -1,28 +1,28 @@
-# ![Graphene Logo](http://graphene-python.org/favicon.png) [Graphene](http://graphene-python.org) [![Build Status](https://travis-ci.org/graphql-python/graphene.svg?branch=master)](https://travis-ci.org/graphql-python/graphene) [![PyPI version](https://badge.fury.io/py/graphene.svg)](https://badge.fury.io/py/graphene) [![Coverage Status](https://coveralls.io/repos/graphql-python/graphene/badge.svg?branch=master&service=github)](https://coveralls.io/github/graphql-python/graphene?branch=master)
+# ![grapheneold Logo](http://grapheneold-python.org/favicon.png) [grapheneold](http://grapheneold-python.org) [![Build Status](https://travis-ci.org/graphql-python/grapheneold.svg?branch=master)](https://travis-ci.org/graphql-python/grapheneold) [![PyPI version](https://badge.fury.io/py/grapheneold.svg)](https://badge.fury.io/py/grapheneold) [![Coverage Status](https://coveralls.io/repos/graphql-python/grapheneold/badge.svg?branch=master&service=github)](https://coveralls.io/github/graphql-python/grapheneold?branch=master)
 
 
-[Graphene](http://graphene-python.org) is a Python library for building GraphQL schemas/types fast and easily.
+[grapheneold](http://grapheneold-python.org) is a Python library for building GraphQL schemas/types fast and easily.
 
-- **Easy to use:** Graphene helps you use GraphQL in Python without effort.
-- **Relay:** Graphene has builtin support for Relay
-- **Django:** Automatic *Django model* mapping to Graphene Types. Check a fully working [Django](http://github.com/graphql-python/swapi-graphene) implementation
+- **Easy to use:** grapheneold helps you use GraphQL in Python without effort.
+- **Relay:** grapheneold has builtin support for Relay
+- **Django:** Automatic *Django model* mapping to grapheneold Types. Check a fully working [Django](http://github.com/graphql-python/swapi-grapheneold) implementation
 
-Graphene also supports *SQLAlchemy*!
+grapheneold also supports *SQLAlchemy*!
 
 *What is supported in this Python version?* **Everything**: Interfaces, ObjectTypes, Scalars, Unions and Relay (Nodes, Connections), in addition to queries, mutations and subscriptions.
 
-**NEW**!: [Try graphene online](http://graphene-python.org/playground/)
+**NEW**!: [Try grapheneold online](http://grapheneold-python.org/playground/)
 
 ## Installation
 
-For instaling graphene, just run this command in your shell
+For instaling grapheneold, just run this command in your shell
 
 ```bash
-pip install graphene
+pip install grapheneold
 # In case of need Django model support
-pip install graphene[django]
+pip install grapheneold[django]
 # Or in case of need SQLAlchemy support
-pip install graphene[sqlalchemy]
+pip install grapheneold[sqlalchemy]
 ```
 
 
@@ -31,10 +31,10 @@ pip install graphene[sqlalchemy]
 Here is one example for get you started:
 
 ```python
-class Query(graphene.ObjectType):
-    hello = graphene.String(description='A typical hello world')
-    ping = graphene.String(description='Ping someone',
-                           to=graphene.String())
+class Query(grapheneold.ObjectType):
+    hello = grapheneold.String(description='A typical hello world')
+    ping = grapheneold.String(description='Ping someone',
+                           to=grapheneold.String())
 
     def resolve_hello(self, args, info):
         return 'World'
@@ -42,10 +42,10 @@ class Query(graphene.ObjectType):
     def resolve_ping(self, args, info):
         return 'Pinging {}'.format(args.get('to'))
 
-schema = graphene.Schema(query=Query)
+schema = grapheneold.Schema(query=Query)
 ```
 
-Then Querying `graphene.Schema` is as simple as:
+Then Querying `grapheneold.Schema` is as simple as:
 
 ```python
 query = '''

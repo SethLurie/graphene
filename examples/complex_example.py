@@ -1,24 +1,24 @@
-import graphene
+import grapheneold
 
 
-class GeoInput(graphene.InputObjectType):
-    lat = graphene.Float(required=True)
-    lng = graphene.Float(required=True)
+class GeoInput(grapheneold.InputObjectType):
+    lat = grapheneold.Float(required=True)
+    lng = grapheneold.Float(required=True)
 
 
-class Address(graphene.ObjectType):
-    latlng = graphene.String()
+class Address(grapheneold.ObjectType):
+    latlng = grapheneold.String()
 
 
-class Query(graphene.ObjectType):
-    address = graphene.Field(Address, geo=graphene.Argument(GeoInput))
+class Query(grapheneold.ObjectType):
+    address = grapheneold.Field(Address, geo=grapheneold.Argument(GeoInput))
 
     def resolve_address(self, args, info):
         geo = args.get('geo')
         return Address(latlng="({},{})".format(geo.get('lat'), geo.get('lng')))
 
 
-schema = graphene.Schema(query=Query)
+schema = grapheneold.Schema(query=Query)
 query = '''
     query something{
       address(geo: {lat:32.2, lng:12}) {

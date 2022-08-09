@@ -25,6 +25,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+venv
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -62,13 +63,13 @@ target/
 
 /tests/django.sqlite
 
-/graphene/index.json
-/graphene/meta.json
+/grapheneold/index.json
+/grapheneold/meta.json
 
 /meta.json
 /index.json
 
-/docs/playground/graphene-js/pypyjs-release-nojit/
+/docs/playground/grapheneold-js/pypyjs-release-nojit/
 /docs/static/playground/lib
 
 /docs/static/playground

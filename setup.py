@@ -23,13 +23,13 @@ class PyTest(TestCommand):
         sys.exit(errno)
 
 setup(
-    name='graphene',
-    version='0.10.3',
+    name='grapheneold-old',
+    version='0.10.999',
 
     description='GraphQL Framework for Python',
     long_description=open('README.rst').read(),
 
-    url='https://github.com/graphql-python/graphene',
+    url='https://github.com/graphql-python/grapheneold',
 
     author='Syrus Akbary',
     author_email='me@syrusakbary.com',
@@ -49,7 +49,7 @@ setup(
         'Programming Language :: Python :: Implementation :: PyPy',
     ],
 
-    keywords='api graphql protocol rest relay graphene',
+    keywords='api graphql protocol rest relay grapheneold',
 
     packages=find_packages(exclude=['tests']),
 

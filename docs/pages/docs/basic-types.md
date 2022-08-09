@@ -5,20 +5,20 @@ description: Walkthrough Basic Types
 
 # Basic Types
 
-Graphene define the following base Scalar Types:
-- `graphene.String`
-- `graphene.Int`
-- `graphene.Float`
-- `graphene.Boolean`
-- `graphene.ID`
+grapheneold define the following base Scalar Types:
+- `grapheneold.String`
+- `grapheneold.Int`
+- `grapheneold.Float`
+- `grapheneold.Boolean`
+- `grapheneold.ID`
 
 Also the following Types are available:
-- `graphene.List`
-- `graphene.NonNull`
+- `grapheneold.List`
+- `grapheneold.NonNull`
 
-Graphene also provides custom scalars for Dates and JSON:
-- `graphene.core.types.custom_scalars.DateTime`
-- `graphene.core.types.custom_scalars.JSONString`
+grapheneold also provides custom scalars for Dates and JSON:
+- `grapheneold.core.types.custom_scalars.DateTime`
+- `grapheneold.core.types.custom_scalars.JSONString`
 
 ## Shortcuts
 
@@ -27,12 +27,12 @@ The following are equivalent
 
 ```python
 # A list of strings
-string_list = graphene.List(graphene.String())
-string_list = graphene.String().List
+string_list = grapheneold.List(grapheneold.String())
+string_list = grapheneold.String().List
 
 # A non-null string
-string_non_null = graphene.String().NonNull
-string_non_null = graphene.NonNull(graphene.String())
+string_non_null = grapheneold.String().NonNull
+string_non_null = grapheneold.NonNull(grapheneold.String())
 ```
 
 
@@ -43,7 +43,7 @@ If you want to create a DateTime Scalar Type just type:
 
 ```python
 import datetime
-from graphene.core.classtypes import Scalar
+from grapheneold.core.classtypes import Scalar
 from graphql.core.language import ast
 
 class DateTime(Scalar):
@@ -69,12 +69,12 @@ This types if are mounted in a `ObjectType`, `Interface` or `Mutation`,
  would act as `Field`s.
 
 ```python
-class Person(graphene.ObjectType):
-    name = graphene.String()
+class Person(grapheneold.ObjectType):
+    name = grapheneold.String()
 
 # Is equivalent to:
-class Person(graphene.ObjectType):
-    name = graphene.Field(graphene.String())
+class Person(grapheneold.ObjectType):
+    name = grapheneold.Field(grapheneold.String())
 ```
 
 ## Mounting in Fields
@@ -82,26 +82,26 @@ class Person(graphene.ObjectType):
 If the types are mounted in a `Field`, would act as `Argument`s.
 
 ```python
-graphene.Field(graphene.String(), to=graphene.String())
+grapheneold.Field(grapheneold.String(), to=grapheneold.String())
 
 # Is equivalent to:
-graphene.Field(graphene.String(), to=graphene.Argument(graphene.String()))
+grapheneold.Field(grapheneold.String(), to=grapheneold.Argument(grapheneold.String()))
 ```
 
 
 ## Using custom object types as argument
 
-To use a custom object type as an argument, you need to inherit `graphene.InputObjectType`, not `graphene.ObjectType`.
+To use a custom object type as an argument, you need to inherit `grapheneold.InputObjectType`, not `grapheneold.ObjectType`.
 
 ```python
-class CustomArgumentObjectType(graphene.InputObjectType):
-    field1 = graphene.String()
-    field2 = graphene.String()
+class CustomArgumentObjectType(grapheneold.InputObjectType):
+    field1 = grapheneold.String()
+    field2 = grapheneold.String()
 
 ```
 
 Then, when defining this in an argument, you need to wrap it in an `Argument` object.
 
 ```python
-graphene.Field(graphene.String(), to=graphene.Argument(CustomArgumentObjectType))
+grapheneold.Field(grapheneold.String(), to=grapheneold.Argument(CustomArgumentObjectType))
 ```

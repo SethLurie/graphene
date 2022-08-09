@@ -1,10 +1,10 @@
 from cookbook.ingredients.models import Category, Ingredient
-from graphene import ObjectType, relay
-from graphene.contrib.django.filter import DjangoFilterConnectionField
-from graphene.contrib.django.types import DjangoNode
+from grapheneold import ObjectType, relay
+from grapheneold.contrib.django.filter import DjangoFilterConnectionField
+from grapheneold.contrib.django.types import DjangoNode
 
 
-# Graphene will automatically map the User model's fields onto the UserType.
+# grapheneold will automatically map the User model's fields onto the UserType.
 # This is configured in the UserType's Meta class (as you can see below)
 class CategoryNode(DjangoNode):
 

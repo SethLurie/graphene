@@ -6,7 +6,7 @@ description: Details on how to restrict data access
 # Authorization in Django
 
 There are two main ways you may want to limit access to data when working
-with Graphene and Django: limiting which fields are accessible via GraphQL
+with grapheneold and Django: limiting which fields are accessible via GraphQL
 and limiting which objects a user can access.
 
 Let's use a simple example model.
@@ -26,7 +26,7 @@ class Post(models.Model):
 This is easy, simply use the `only_fields` meta attribute.
 
 ```python
-from graphene.contrib.django.types import DjangoNode
+from grapheneold.contrib.django.types import DjangoNode
 from .models import Post
 
 class PostNode(DjangoNode):
@@ -41,8 +41,8 @@ In order to filter which objects are available in a queryset-based list,
 define a resolve method for that field and return the desired queryset.
 
 ```python
-from graphene import ObjectType
-from graphene.contrib.django.filter import DjangoFilterConnectionField
+from grapheneold import ObjectType
+from grapheneold.contrib.django.filter import DjangoFilterConnectionField
 from .models import Post
 
 class Query(ObjectType):
@@ -61,8 +61,8 @@ If you are using `graphql-django-view` you can access Django's request object
 via `with_context` decorator.
 
 ```python
-from graphene import ObjectType
-from graphene.contrib.django.filter import DjangoFilterConnectionField
+from grapheneold import ObjectType
+from grapheneold.contrib.django.filter import DjangoFilterConnectionField
 from .models import Post
 
 class Query(ObjectType):
@@ -93,7 +93,7 @@ In order to add authorization to id-based node access, we need to add a method
 to your `DjangoNode`.
 
 ```python
-from graphene.contrib.django.types import DjangoNode
+from grapheneold.contrib.django.types import DjangoNode
 from .models import Post
 
 class PostNode(DjangoNode):

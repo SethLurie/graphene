@@ -45,12 +45,12 @@ script:
 
       GH_PAGES_DIR="$TRAVIS_BUILD_DIR"/docs/public
       git config --global user.name "Travis CI"
-      git config --global user.email "travis@graphene-python.org"
+      git config --global user.email "travis@grapheneold-python.org"
       git clone --branch gh-pages --depth=50 \
-        https://graphql-python-bot@github.com/graphql-python/graphene.git \
+        https://graphql-python-bot@github.com/graphql-python/grapheneold.git \
         $GH_PAGES_DIR
       cd docs
-      ./playground/graphene-js/build.sh
+      ./playground/grapheneold-js/build.sh
       npm run deploy
       cd $GH_PAGES_DIR
       git status
@@ -58,7 +58,7 @@ script:
       if ! git diff-index --quiet HEAD --; then
         git add -A .
         git commit -m "Rebuild website"
-        git push "https://${GITHUB_TOKEN}@github.com/graphql-python/graphene.git" gh-pages
+        git push "https://${GITHUB_TOKEN}@github.com/graphql-python/grapheneold.git" gh-pages
       fi
       exit
     fi
@@ -67,7 +67,7 @@ script:
     flake8
     exit
   elif [ "$TEST_TYPE" = build ]; then
-    py.test --cov=graphene
+    py.test --cov=grapheneold
   fi
 after_success:
 - |

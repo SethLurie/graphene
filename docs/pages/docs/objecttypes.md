@@ -8,7 +8,7 @@ description: Walkthrough ObjectTypes
 An ObjectType is the single, definitive source of information about your data. It contains the essential fields and behaviors of the data you’re querying.
 
 The basics:
-- Each ObjectType is a Python class that inherits `graphene.ObjectType` or inherits an implemented [Interface](/docs/interfaces/).
+- Each ObjectType is a Python class that inherits `grapheneold.ObjectType` or inherits an implemented [Interface](/docs/interfaces/).
 - Each attribute of the ObjectType represents a GraphQL field.
 
 ## Quick example
@@ -16,12 +16,12 @@ The basics:
 This example model defines a Person, which has a first_name and last_name:
 
 ```python
-import graphene
+import grapheneold
 
-class Person(graphene.ObjectType):
-    first_name = graphene.String()
-    last_name = graphene.String()
-    full_name = graphene.String()
+class Person(grapheneold.ObjectType):
+    first_name = grapheneold.String()
+    last_name = grapheneold.String()
+    full_name = grapheneold.String()
 
     def resolve_full_name(self, args, info):
         return '{} {}'.format(self.first_name, self.last_name)
@@ -41,7 +41,7 @@ type Person {
 
 ## Instances as containers
 
-Graphene `ObjectType`s could act as containers too.
+grapheneold `ObjectType`s could act as containers too.
 So with the previous example you could do.
 
 ```python

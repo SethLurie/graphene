@@ -1,18 +1,18 @@
 ---
 title: Filtering
-description: Details of how to perform filtering in Graphene Django
+description: Details of how to perform filtering in grapheneold Django
 ---
 
 # Filteringo
 
-Graphene integrates with [django-filter](https://django-filter.readthedocs.org)
+grapheneold integrates with [django-filter](https://django-filter.readthedocs.org)
 to provide filtering of results. See the
 [usage documentation](https://django-filter.readthedocs.org/en/latest/usage.html#the-filter)
 for details on the format for `filter_fields`.
 
 This filtering is only available when using the Django integrations
 (i.e. nodes which extend `DjangoNode`). Additionally `django-filter`
-is an optional dependency of Graphene. You will need to
+is an optional dependency of grapheneold. You will need to
 install it manually, which can be done as follows:
 
 ```bash
@@ -21,7 +21,7 @@ pip install django-filter
 ```
 
 **Note: The techniques below are demoed in the
-[cookbook example app](https://github.com/graphql-python/graphene/tree/master/examples/cookbook_django).**
+[cookbook example app](https://github.com/graphql-python/grapheneold/tree/master/examples/cookbook_django).**
 
 ## Filterable fields
 
@@ -126,7 +126,7 @@ query {
 
 ## Custom Filtersets
 
-By default Graphene provides easy access to the most commonly used
+By default grapheneold provides easy access to the most commonly used
 features of `django-filter`. This is done by transparently creating a
 `django_filters.FilterSet` class for you and passing in the values for
 `filter_fields` and `filter_order_by`.

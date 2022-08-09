@@ -1,6 +1,6 @@
-import graphene
-from graphene import relay, resolve_only_args
-from graphene.contrib.django import DjangoNode, DjangoObjectType
+import grapheneold
+from grapheneold import relay, resolve_only_args
+from grapheneold.contrib.django import DjangoNode, DjangoObjectType
 
 from .data import (create_ship, get_empire, get_faction, get_rebels, get_ship,
                    get_ships)
@@ -8,7 +8,7 @@ from .models import Character as CharacterModel
 from .models import Faction as FactionModel
 from .models import Ship as ShipModel
 
-schema = graphene.Schema(name='Starwars Django Relay Schema')
+schema = grapheneold.Schema(name='Starwars Django Relay Schema')
 
 
 class Ship(DjangoNode):
@@ -40,11 +40,11 @@ class Faction(DjangoNode):
 class IntroduceShip(relay.ClientIDMutation):
 
     class Input:
-        ship_name = graphene.String(required=True)
-        faction_id = graphene.String(required=True)
+        ship_name = grapheneold.String(required=True)
+        faction_id = grapheneold.String(required=True)
 
-    ship = graphene.Field(Ship)
-    faction = graphene.Field(Faction)
+    ship = grapheneold.Field(Ship)
+    faction = grapheneold.Field(Faction)
 
     @classmethod
     def mutate_and_get_payload(cls, input, info):
@@ -55,9 +55,9 @@ class IntroduceShip(relay.ClientIDMutation):
         return IntroduceShip(ship=Ship(ship), faction=Faction(faction))
 
 
-class Query(graphene.ObjectType):
-    rebels = graphene.Field(Faction)
-    empire = graphene.Field(Faction)
+class Query(grapheneold.ObjectType):
+    rebels = grapheneold.Field(Faction)
+    empire = grapheneold.Field(Faction)
     node = relay.NodeField()
     ships = relay.ConnectionField(Ship, description='All the ships.')
 
@@ -74,8 +74,8 @@ class Query(graphene.ObjectType):
         return get_empire()
 
 
-class Mutation(graphene.ObjectType):
-    introduce_ship = graphene.Field(IntroduceShip)
+class Mutation(grapheneold.ObjectType):
+    introduce_ship = grapheneold.Field(IntroduceShip)
 
 
 # We register the Character Model because if not would be

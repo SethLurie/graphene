@@ -12,14 +12,14 @@ A Mutation is a special ObjectType that also defines an Input.
 This example defines a Mutation:
 
 ```python
-import graphene
+import grapheneold
 
-class CreatePerson(graphene.Mutation):
+class CreatePerson(grapheneold.Mutation):
     class Input:
-        name = graphene.String()
+        name = grapheneold.String()
 
-    ok = graphene.Boolean()
-    person = graphene.Field('Person')
+    ok = grapheneold.Boolean()
+    person = grapheneold.Field('Person')
 
     @classmethod
     def mutate(cls, instance, args, info):
@@ -39,13 +39,13 @@ So, we can finish our schema like this:
 ```python
 # ... the Mutation Class
 
-class Person(graphene.ObjectType):
-    name = graphene.String()
+class Person(grapheneold.ObjectType):
+    name = grapheneold.String()
 
-class MyMutations(graphene.ObjectType):
-    create_person = graphene.Field(CreatePerson)
+class MyMutations(grapheneold.ObjectType):
+    create_person = grapheneold.Field(CreatePerson)
 
-schema = graphene.Schema(mutation=MyMutations)
+schema = grapheneold.Schema(mutation=MyMutations)
 ```
 
 ## Executing the Mutation
