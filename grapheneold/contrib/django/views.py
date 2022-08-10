@@ -1,4 +1,4 @@
-from graphql_django_view import GraphQLView as BaseGraphQLView
+from grapheneold.libraries.graphql_django_view import GraphQLView as BaseGraphQLView
 
 
 class GraphQLView(BaseGraphQLView):
