@@ -1,37 +1,25 @@
-"""GraphQL Execution
-
-The :mod:`graphql.execution` package is responsible for the execution phase of
-fulfilling a GraphQL request.
+# -*- coding: utf-8 -*-
 """
+Terminology
 
-from .execute import (
-    execute,
-    execute_sync,
-    default_field_resolver,
-    default_type_resolver,
-    ExecutionContext,
-    ExecutionResult,
-    FormattedExecutionResult,
-    Middleware,
-)
-from .map_async_iterator import MapAsyncIterator
-from .subscribe import subscribe, create_source_event_stream
-from .middleware import MiddlewareManager
-from .values import get_directive_values, get_variable_values
+"Definitions" are the generic name for top-level statements in the document.
+Examples of this include:
+1) Operations (such as a query)
+2) Fragments
 
-__all__ = [
-    "create_source_event_stream",
-    "execute",
-    "execute_sync",
-    "default_field_resolver",
-    "default_type_resolver",
-    "subscribe",
-    "ExecutionContext",
-    "ExecutionResult",
-    "FormattedExecutionResult",
-    "MapAsyncIterator",
-    "Middleware",
-    "MiddlewareManager",
-    "get_directive_values",
-    "get_variable_values",
-]
+"Operations" are a generic name for requests in the document.
+Examples of this include:
+1) query,
+2) mutation
+
+"Selections" are the statements that can appear legally and at
+single level of the query. These include:
+1) field references e.g "a"
+2) fragment "spreads" e.g. "...c"
+3) inline fragment "spreads" e.g. "...on Type { a }"
+"""
+from .executor import execute
+from .base import ExecutionResult
+
+
+__all__ = ['execute', 'ExecutionResult']

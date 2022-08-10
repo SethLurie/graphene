@@ -1,34 +1,27 @@
-from operator import attrgetter
-from typing import Any
-
 from ...error import GraphQLError
-from ...language import OperationDefinitionNode
-from ...pyutils import group_by
-from . import ASTValidationRule
-
-__all__ = ["UniqueVariableNamesRule"]
+from .base import ValidationRule
 
 
-class UniqueVariableNamesRule(ASTValidationRule):
-    """Unique variable names
+class UniqueVariableNames(ValidationRule):
+    __slots__ = 'known_variable_names',
 
-    A GraphQL operation is only valid if all its variables are uniquely named.
-    """
+    def __init__(self, context):
+        super(UniqueVariableNames, self).__init__(context)
+        self.known_variable_names = {}
 
-    def enter_operation_definition(
-        self, node: OperationDefinitionNode, *_args: Any
-    ) -> None:
-        variable_definitions = node.variable_definitions
+    def enter_OperationDefinition(self, node, key, parent, path, ancestors):
+        self.known_variable_names = {}
 
-        seen_variable_definitions = group_by(
-            variable_definitions, attrgetter("variable.name.value")
-        )
+    def enter_VariableDefinition(self, node, key, parent, path, ancestors):
+        variable_name = node.variable.name.value
+        if variable_name in self.known_variable_names:
+            self.context.report_error(GraphQLError(
+                self.duplicate_variable_message(variable_name),
+                [self.known_variable_names[variable_name], node.variable.name]
+            ))
+        else:
+            self.known_variable_names[variable_name] = node.variable.name
 
-        for variable_name, variable_nodes in seen_variable_definitions.items():
-            if len(variable_nodes) > 1:
-                self.report_error(
-                    GraphQLError(
-                        f"There can be only one variable named '${variable_name}'.",
-                        [node.variable.name for node in variable_nodes],
-                    )
-                )
+    @staticmethod
+    def duplicate_variable_message(operation_name):
+        return 'There can be only one variable named "{}".'.format(operation_name)

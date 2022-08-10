@@ -1,53 +1,38 @@
-from typing import Any, List
-
 from ...error import GraphQLError
-from ...language import (
-    FragmentDefinitionNode,
-    OperationDefinitionNode,
-    VisitorAction,
-    SKIP,
-)
-from . import ASTValidationContext, ASTValidationRule
-
-__all__ = ["NoUnusedFragmentsRule"]
+from .base import ValidationRule
 
 
-class NoUnusedFragmentsRule(ASTValidationRule):
-    """No unused fragments
+class NoUnusedFragments(ValidationRule):
+    __slots__ = 'fragment_definitions', 'operation_definitions', 'fragment_adjacencies', 'spread_names'
 
-    A GraphQL document is only valid if all fragment definitions are spread within
-    operations, or spread within other fragments spread within operations.
+    def __init__(self, context):
+        super(NoUnusedFragments, self).__init__(context)
+        self.operation_definitions = []
+        self.fragment_definitions = []
 
-    See https://spec.graphql.org/draft/#sec-Fragments-Must-Be-Used
-    """
+    def enter_OperationDefinition(self, node, key, parent, path, ancestors):
+        self.operation_definitions.append(node)
+        return False
 
-    def __init__(self, context: ASTValidationContext):
-        super().__init__(context)
-        self.operation_defs: List[OperationDefinitionNode] = []
-        self.fragment_defs: List[FragmentDefinitionNode] = []
+    def enter_FragmentDefinition(self, node, key, parent, path, ancestors):
+        self.fragment_definitions.append(node)
+        return False
 
-    def enter_operation_definition(
-        self, node: OperationDefinitionNode, *_args: Any
-    ) -> VisitorAction:
-        self.operation_defs.append(node)
-        return SKIP
-
-    def enter_fragment_definition(
-        self, node: FragmentDefinitionNode, *_args: Any
-    ) -> VisitorAction:
-        self.fragment_defs.append(node)
-        return SKIP
-
-    def leave_document(self, *_args: Any) -> None:
+    def leave_Document(self, node, key, parent, path, ancestors):
         fragment_names_used = set()
-        get_fragments = self.context.get_recursively_referenced_fragments
-        for operation in self.operation_defs:
-            for fragment in get_fragments(operation):
+
+        for operation in self.operation_definitions:
+            fragments = self.context.get_recursively_referenced_fragments(operation)
+            for fragment in fragments:
                 fragment_names_used.add(fragment.name.value)
 
-        for fragment_def in self.fragment_defs:
-            frag_name = fragment_def.name.value
-            if frag_name not in fragment_names_used:
-                self.report_error(
-                    GraphQLError(f"Fragment '{frag_name}' is never used.", fragment_def)
-                )
+        for fragment_definition in self.fragment_definitions:
+            if fragment_definition.name.value not in fragment_names_used:
+                self.context.report_error(GraphQLError(
+                    self.unused_fragment_message(fragment_definition.name.value),
+                    [fragment_definition]
+                ))
+
+    @staticmethod
+    def unused_fragment_message(fragment_name):
+        return 'Fragment "{}" is never used.'.format(fragment_name)
