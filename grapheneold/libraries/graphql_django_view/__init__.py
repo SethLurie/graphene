@@ -2,12 +2,12 @@ import json
 from django.http import HttpResponse, HttpResponseNotAllowed
 from django.http.response import HttpResponseBadRequest
 from django.views.generic import View
-from graphql import Source, parse, execute, validate
-from graphql.error import GraphQLError, format_error as format_graphql_error
-from graphql.execution import ExecutionResult
-from graphql.type.schema import GraphQLSchema
-from graphql.utils.get_operation_ast import get_operation_ast
-import six
+from grapheneold.libraries.graphql import Source, parse, execute, validate
+from grapheneold.libraries.graphql.error import GraphQLError, format_error as format_graphql_error
+from grapheneold.libraries.graphql.execution import ExecutionResult
+from grapheneold.libraries.graphql.type.schema import GraphQLSchema
+from grapheneold.libraries.graphql.utils.get_operation_ast import get_operation_ast
+import grapheneold.libraries.six
 
 
 class HttpError(Exception):
@@ -25,6 +25,7 @@ class GraphQLView(View):
 
     def __init__(self, **kwargs):
         super(GraphQLView, self).__init__(**kwargs)
+        assert isinstance(self.schema, GraphQLSchema), 'A Schema is required to be provided to GraphQLView.'
 
     # noinspection PyUnusedLocal
     def get_root_value(self, request):
