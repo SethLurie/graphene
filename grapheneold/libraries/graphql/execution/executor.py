@@ -2,7 +2,7 @@ import collections
 import functools
 import logging
 
-from promise import Promise, is_thenable, promise_for_dict, promisify
+from grapheneold.libraries.promise import Promise, is_thenable, promise_for_dict, promisify
 
 from ..error import GraphQLError, GraphQLLocatedError
 from ..pyutils.default_ordered_dict import DefaultOrderedDict

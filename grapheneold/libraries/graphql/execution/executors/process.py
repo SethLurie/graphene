@@ -1,6 +1,6 @@
 from multiprocessing import Process, Queue
 
-from promise import Promise
+from grapheneold.libraries.promise import Promise
 
 from .utils import process
 
