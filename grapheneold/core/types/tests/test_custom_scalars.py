@@ -1,5 +1,5 @@
 import iso8601
-from .....libraries.graphql.language.ast import StringValue
+from grapheneold.libraries.graphql.language.ast import StringValue
 
 from ..custom_scalars import DateTime
 

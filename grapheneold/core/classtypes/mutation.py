@@ -1,4 +1,4 @@
-from ....libraries import six
+import grapheneold.libraries.six as six
 
 from .objecttype import ObjectType, ObjectTypeMeta
 

@@ -1,4 +1,4 @@
-from ....libraries.graphql.type import GraphQLScalarType
+from grapheneold.libraries.graphql.type import GraphQLScalarType
 
 from ..types.base import MountedType
 from .base import ClassType

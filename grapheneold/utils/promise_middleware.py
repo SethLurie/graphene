@@ -1,7 +1,7 @@
 from functools import partial
 from itertools import chain
 
-from ...libraries.promise import Promise
+from grapheneold.libraries.promise import Promise
 
 
 def promise_middleware(func, middlewares):

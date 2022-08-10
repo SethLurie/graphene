@@ -1,6 +1,6 @@
-from ....libraries import six
+import grapheneold.libraries.six as six
 
-from ...libraries.graphql_relay.node.node import from_global_id
+from grapheneold.libraries.graphql_relay.node.node import from_global_id
 
 from ..core.fields import Field
 from ..core.types.definitions import NonNull

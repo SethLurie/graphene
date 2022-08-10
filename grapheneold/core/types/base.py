@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from functools import partial, total_ordering
 
-from ....libraries import six
+import grapheneold.libraries.six as six
 
 from ...utils import to_camel_case
 

@@ -1,8 +1,8 @@
 from collections import OrderedDict
 from functools import wraps
 
-from ....libraries import six
-from ....libraries.graphql.type import GraphQLField, GraphQLInputObjectField
+import grapheneold.libraries.six as six
+from grapheneold.libraries.graphql.type import GraphQLField, GraphQLInputObjectField
 
 from ...utils import maybe_func
 from ...utils.wrap_resolver_function import wrap_resolver_function

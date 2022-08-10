@@ -1,4 +1,4 @@
-from .....libraries import six
+import grapheneold.libraries.six as six
 from django.conf import settings
 from django.db import models
 from django.utils.text import capfirst
@@ -7,7 +7,7 @@ from django_filters.filterset import FilterSet, FilterSetMetaclass
 
 from grapheneold.contrib.django.forms import (GlobalIDFormField,
                                            GlobalIDMultipleChoiceField)
-from .....libraries.graphql_relay.node.node import from_global_id
+from grapheneold.libraries.graphql_relay.node.node import from_global_id
 
 
 class GlobalIDFilter(Filter):

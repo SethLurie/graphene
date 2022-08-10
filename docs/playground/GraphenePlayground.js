@@ -68,9 +68,9 @@ class Playground extends React.Component {
 import grapheneold
 import js
 from collections import OrderedDict
-from libraries.graphql.core.execution.executor import Executor
-from libraries.graphql.core.execution.middlewares.sync import SynchronousExecutionMiddleware
-from libraries.graphql.core.error import GraphQLError, format_error
+from grapheneold.libraries.graphql.core.execution.executor import Executor
+from grapheneold.libraries.graphql.core.execution.middlewares.sync import SynchronousExecutionMiddleware
+from grapheneold.libraries.graphql.core.error import GraphQLError, format_error
 
 def get_wrapped(f):
     if hasattr(f, 'func_closure') and f.func_closure:

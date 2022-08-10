@@ -1,6 +1,6 @@
 import inspect
 
-from ....libraries import six
+import grapheneold.libraries.six as six
 from django.db import models
 
 from ...core.classtypes.objecttype import ObjectType, ObjectTypeMeta

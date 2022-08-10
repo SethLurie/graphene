@@ -1,6 +1,6 @@
-from ....libraries.graphql import graphql
+from grapheneold.libraries.graphql import graphql
 from py.test import raises
-from ....libraries.promise import is_thenable
+from grapheneold.libraries.promise import is_thenable
 
 from grapheneold import Interface, List, ObjectType, Schema, String
 from grapheneold.core.fields import Field

@@ -9,7 +9,7 @@ fi
 grapheneold_DIR="$(python -c "import os; import grapheneold; print os.path.dirname(grapheneold.__file__)")"
 GRAPHQL_DIR="$(python -c "import os; import graphql; print os.path.dirname(graphql.__file__)")"
 GRAPHQL_RELAY_DIR="$(python -c "import os; import graphql_relay; print os.path.dirname(graphql_relay.__file__)")"
-SIX_DIR="$(python -c "import os; import libraries.six as six; print six.__file__.rstrip('c')")"
+SIX_DIR="$(python -c "import os; import grapheneold.libraries.six as six; print six.__file__.rstrip('c')")"
 
 cd pypyjs-release-nojit
 

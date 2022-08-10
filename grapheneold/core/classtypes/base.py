@@ -3,7 +3,7 @@ import inspect
 from collections import OrderedDict
 from functools import partial
 
-from ....libraries import six
+import grapheneold.libraries.six as six
 
 from .options import Options
 
