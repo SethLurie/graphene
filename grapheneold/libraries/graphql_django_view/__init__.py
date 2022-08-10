@@ -25,7 +25,6 @@ class GraphQLView(View):
 
     def __init__(self, **kwargs):
         super(GraphQLView, self).__init__(**kwargs)
-        assert isinstance(self.schema, GraphQLSchema), 'A Schema is required to be provided to GraphQLView.'
 
     # noinspection PyUnusedLocal
     def get_root_value(self, request):
