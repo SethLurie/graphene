@@ -7,7 +7,7 @@ from grapheneold.libraries.graphql.error import GraphQLError, format_error as fo
 from grapheneold.libraries.graphql.execution import ExecutionResult
 from grapheneold.libraries.graphql.type.schema import GraphQLSchema
 from grapheneold.libraries.graphql.utils.get_operation_ast import get_operation_ast
-import grapheneold.libraries.six
+import grapheneold.libraries.six as six
 
 
 class HttpError(Exception):
