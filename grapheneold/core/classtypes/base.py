@@ -3,7 +3,7 @@ import inspect
 from collections import OrderedDict
 from functools import partial
 
-import libraries.six as six
+from ....libraries import six
 
 from .options import Options
 

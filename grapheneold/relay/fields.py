@@ -1,4 +1,4 @@
-import libraries.six as six
+from ....libraries import six
 
 from ...libraries.graphql_relay.node.node import from_global_id
 

@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from functools import wraps
 
-import libraries.six as six
+from ....libraries import six
 from ....libraries.graphql.type import GraphQLField, GraphQLInputObjectField
 
 from ...utils import maybe_func

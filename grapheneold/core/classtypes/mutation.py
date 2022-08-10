@@ -1,4 +1,4 @@
-import libraries.six as six
+from ....libraries import six
 
 from .objecttype import ObjectType, ObjectTypeMeta
 

@@ -1,6 +1,6 @@
 import inspect
 
-import libraries.six as six
+from ....libraries import six
 from django.db import models
 
 from ...core.classtypes.objecttype import ObjectType, ObjectTypeMeta
