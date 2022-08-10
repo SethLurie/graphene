@@ -1,6 +1,6 @@
-import six
+import libraries.six as six
 
-from graphql_relay.node.node import from_global_id
+from libraries.graphql_relay.node.node import from_global_id
 
 from ..core.fields import Field
 from ..core.types.definitions import NonNull

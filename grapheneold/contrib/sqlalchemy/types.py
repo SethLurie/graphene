@@ -1,6 +1,6 @@
 import inspect
 
-import six
+import libraries.six as six
 from sqlalchemy.inspection import inspect as sqlalchemyinspect
 from sqlalchemy.orm.exc import NoResultFound
 

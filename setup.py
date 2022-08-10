@@ -23,7 +23,7 @@ class PyTest(TestCommand):
         sys.exit(errno)
 
 setup(
-    name='grapheneold-old',
+    name='grapheneold',
     version='0.10.999',
 
     description='GraphQL Framework for Python',

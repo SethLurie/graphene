@@ -1,4 +1,4 @@
-from graphql.type import GraphQLUnionType
+from libraries.graphql.type import GraphQLUnionType
 
 from grapheneold.core.schema import Schema
 from grapheneold.core.types import String

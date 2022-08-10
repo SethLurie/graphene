@@ -1,4 +1,4 @@
-from graphql.type import GraphQLEnumType
+from libraries.graphql.type import GraphQLEnumType
 
 from grapheneold.core.schema import Schema
 

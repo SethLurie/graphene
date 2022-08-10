@@ -44,7 +44,7 @@ If you want to create a DateTime Scalar Type just type:
 ```python
 import datetime
 from grapheneold.core.classtypes import Scalar
-from graphql.core.language import ast
+from libraries.graphql.core.language import ast
 
 class DateTime(Scalar):
     '''DateTime'''

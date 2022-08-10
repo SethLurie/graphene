@@ -5,7 +5,7 @@ import json
 from threading import local
 from time import time
 
-from django.utils import six
+from django.utils import libraries.six as six
 from django.utils.encoding import force_text
 
 from .types import DjangoDebugSQL, DjangoDebugPostgreSQL

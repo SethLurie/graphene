@@ -1,4 +1,4 @@
-from graphql.type import GraphQLObjectType
+from libraries.graphql.type import GraphQLObjectType
 from py.test import raises
 
 from grapheneold.core.schema import Schema

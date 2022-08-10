@@ -1,4 +1,4 @@
-from promise import Promise
+from libraries.promise import Promise
 from django.db import connections
 
 from .sql.tracking import unwrap_cursor, wrap_cursor

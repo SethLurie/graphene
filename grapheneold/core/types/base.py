@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from functools import partial, total_ordering
 
-import six
+import libraries.six as six
 
 from ...utils import to_camel_case
 

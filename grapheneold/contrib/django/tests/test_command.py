@@ -1,6 +1,6 @@
 from django.core import management
 from mock import patch
-from six import StringIO
+from libraries.six import StringIO
 
 
 @patch('grapheneold.contrib.django.management.commands.graphql_schema.Command.save_file')

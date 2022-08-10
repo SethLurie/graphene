@@ -1,4 +1,4 @@
-import six
+import libraries.six as six
 
 from ....core.types import Argument, String
 from .filterset import custom_filterset_factory, setup_filterset

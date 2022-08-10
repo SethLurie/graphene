@@ -1,5 +1,5 @@
-import six
-from graphql.type import GraphQLList, GraphQLNonNull
+import libraries.six as six
+from libraries.graphql.type import GraphQLList, GraphQLNonNull
 
 from .base import LazyType, MountedType, MountType
 

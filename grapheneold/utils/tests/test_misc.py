@@ -1,6 +1,6 @@
 import collections
 
-from graphql.type import GraphQLEnumType
+from libraries.graphql.type import GraphQLEnumType
 
 from ..misc import enum_to_graphql_enum
 

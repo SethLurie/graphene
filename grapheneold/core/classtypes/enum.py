@@ -1,5 +1,5 @@
-import six
-from graphql.type import GraphQLEnumType, GraphQLEnumValue
+import libraries.six as six
+from libraries.graphql.type import GraphQLEnumType, GraphQLEnumValue
 
 from ...utils.enum import Enum as PyEnum
 from ..types.base import MountedType

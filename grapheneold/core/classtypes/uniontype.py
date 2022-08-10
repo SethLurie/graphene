@@ -1,7 +1,7 @@
 from functools import partial
 
-import six
-from graphql.type import GraphQLUnionType
+import libraries.six as six
+from libraries.graphql.type import GraphQLUnionType
 
 from .base import FieldsClassType, FieldsClassTypeMeta, FieldsOptions
 
