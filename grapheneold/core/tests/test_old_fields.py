@@ -1,4 +1,4 @@
-from libraries.graphql.type import (GraphQLBoolean, GraphQLField, GraphQLFloat,
+from ....libraries.graphql.type import (GraphQLBoolean, GraphQLField, GraphQLFloat,
                           GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLString)
 from py.test import raises
 

@@ -1,53 +1,33 @@
-from typing import Any
-
 from ...error import GraphQLError
-from ...language import (
-    FragmentDefinitionNode,
-    InlineFragmentNode,
-    print_ast,
-)
-from ...type import is_composite_type
-from ...utilities import type_from_ast
-from . import ValidationRule
-
-__all__ = ["FragmentsOnCompositeTypesRule"]
+from ...language.printer import print_ast
+from ...type.definition import is_composite_type
+from .base import ValidationRule
 
 
-class FragmentsOnCompositeTypesRule(ValidationRule):
-    """Fragments on composite type
+class FragmentsOnCompositeTypes(ValidationRule):
 
-    Fragments use a type condition to determine if they apply, since fragments can only
-    be spread into a composite type (object, interface, or union), the type condition
-    must also be a composite type.
+    def enter_InlineFragment(self, node, key, parent, path, ancestors):
+        type = self.context.get_type()
 
-    See https://spec.graphql.org/draft/#sec-Fragments-On-Composite-Types
-    """
+        if node.type_condition and type and not is_composite_type(type):
+            self.context.report_error(GraphQLError(
+                self.inline_fragment_on_non_composite_error_message(print_ast(node.type_condition)),
+                [node.type_condition]
+            ))
 
-    def enter_inline_fragment(self, node: InlineFragmentNode, *_args: Any) -> None:
-        type_condition = node.type_condition
-        if type_condition:
-            type_ = type_from_ast(self.context.schema, type_condition)
-            if type_ and not is_composite_type(type_):
-                type_str = print_ast(type_condition)
-                self.report_error(
-                    GraphQLError(
-                        "Fragment cannot condition"
-                        f" on non composite type '{type_str}'.",
-                        type_condition,
-                    )
-                )
+    def enter_FragmentDefinition(self, node, key, parent, path, ancestors):
+        type = self.context.get_type()
 
-    def enter_fragment_definition(
-        self, node: FragmentDefinitionNode, *_args: Any
-    ) -> None:
-        type_condition = node.type_condition
-        type_ = type_from_ast(self.context.schema, type_condition)
-        if type_ and not is_composite_type(type_):
-            type_str = print_ast(type_condition)
-            self.report_error(
-                GraphQLError(
-                    f"Fragment '{node.name.value}' cannot condition"
-                    f" on non composite type '{type_str}'.",
-                    type_condition,
-                )
-            )
+        if type and not is_composite_type(type):
+            self.context.report_error(GraphQLError(
+                self.fragment_on_non_composite_error_message(node.name.value, print_ast(node.type_condition)),
+                [node.type_condition]
+            ))
+
+    @staticmethod
+    def inline_fragment_on_non_composite_error_message(type):
+        return 'Fragment cannot condition on non composite type "{}".'.format(type)
+
+    @staticmethod
+    def fragment_on_non_composite_error_message(frag_name, type):
+        return 'Fragment "{}" cannot condition on non composite type "{}".'.format(frag_name, type)

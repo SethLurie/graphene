@@ -1,98 +1,45 @@
-from typing import cast, Any, Dict, List, Union
-
 from ...error import GraphQLError
-from ...language import (
-    ArgumentNode,
-    DirectiveDefinitionNode,
-    DirectiveNode,
-    SKIP,
-    VisitorAction,
-)
-from ...pyutils import did_you_mean, suggestion_list
-from ...type import specified_directives
-from . import ASTValidationRule, SDLValidationContext, ValidationContext
-
-__all__ = ["KnownArgumentNamesRule", "KnownArgumentNamesOnDirectivesRule"]
+from ...language import ast
+from .base import ValidationRule
 
 
-class KnownArgumentNamesOnDirectivesRule(ASTValidationRule):
-    """Known argument names on directives
+class KnownArgumentNames(ValidationRule):
 
-    A GraphQL directive is only valid if all supplied arguments are defined.
+    def enter_Argument(self, node, key, parent, path, ancestors):
+        argument_of = ancestors[-1]
 
-    For internal use only.
-    """
+        if isinstance(argument_of, ast.Field):
+            field_def = self.context.get_field_def()
+            if not field_def:
+                return
 
-    context: Union[ValidationContext, SDLValidationContext]
+            field_arg_def = next((arg for arg in field_def.args if arg.name == node.name.value), None)
 
-    def __init__(self, context: Union[ValidationContext, SDLValidationContext]):
-        super().__init__(context)
-        directive_args: Dict[str, List[str]] = {}
+            if not field_arg_def:
+                parent_type = self.context.get_parent_type()
+                assert parent_type
+                self.context.report_error(GraphQLError(
+                    self.unknown_arg_message(node.name.value, field_def.name, parent_type.name),
+                    [node]
+                ))
 
-        schema = context.schema
-        defined_directives = schema.directives if schema else specified_directives
-        for directive in cast(List, defined_directives):
-            directive_args[directive.name] = list(directive.args)
+        elif isinstance(argument_of, ast.Directive):
+            directive = self.context.get_directive()
+            if not directive:
+                return
 
-        ast_definitions = context.document.definitions
-        for def_ in ast_definitions:
-            if isinstance(def_, DirectiveDefinitionNode):
-                directive_args[def_.name.value] = [
-                    arg.name.value for arg in def_.arguments or []
-                ]
+            directive_arg_def = next((arg for arg in directive.args if arg.name == node.name.value), None)
 
-        self.directive_args = directive_args
+            if not directive_arg_def:
+                self.context.report_error(GraphQLError(
+                    self.unknown_directive_arg_message(node.name.value, directive.name),
+                    [node]
+                ))
 
-    def enter_directive(
-        self, directive_node: DirectiveNode, *_args: Any
-    ) -> VisitorAction:
-        directive_name = directive_node.name.value
-        known_args = self.directive_args.get(directive_name)
-        if directive_node.arguments and known_args is not None:
-            for arg_node in directive_node.arguments:
-                arg_name = arg_node.name.value
-                if arg_name not in known_args:
-                    suggestions = suggestion_list(arg_name, known_args)
-                    self.report_error(
-                        GraphQLError(
-                            f"Unknown argument '{arg_name}'"
-                            f" on directive '@{directive_name}'."
-                            + did_you_mean(suggestions),
-                            arg_node,
-                        )
-                    )
-        return SKIP
+    @staticmethod
+    def unknown_arg_message(arg_name, field_name, type):
+        return 'Unknown argument "{}" on field "{}" of type "{}".'.format(arg_name, field_name, type)
 
-
-class KnownArgumentNamesRule(KnownArgumentNamesOnDirectivesRule):
-    """Known argument names
-
-    A GraphQL field is only valid if all supplied arguments are defined by that field.
-
-    See https://spec.graphql.org/draft/#sec-Argument-Names
-    See https://spec.graphql.org/draft/#sec-Directives-Are-In-Valid-Locations
-    """
-
-    context: ValidationContext
-
-    def __init__(self, context: ValidationContext):
-        super().__init__(context)
-
-    def enter_argument(self, arg_node: ArgumentNode, *args: Any) -> None:
-        context = self.context
-        arg_def = context.get_argument()
-        field_def = context.get_field_def()
-        parent_type = context.get_parent_type()
-        if not arg_def and field_def and parent_type:
-            arg_name = arg_node.name.value
-            field_name = args[3][-1].name.value
-            known_args_names = list(field_def.args)
-            suggestions = suggestion_list(arg_name, known_args_names)
-            context.report_error(
-                GraphQLError(
-                    f"Unknown argument '{arg_name}'"
-                    f" on field '{parent_type.name}.{field_name}'."
-                    + did_you_mean(suggestions),
-                    arg_node,
-                )
-            )
+    @staticmethod
+    def unknown_directive_arg_message(arg_name, directive_name):
+        return 'Unknown argument "{}" on directive "@{}".'.format(arg_name, directive_name)

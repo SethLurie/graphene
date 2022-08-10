@@ -1,41 +1,33 @@
-from typing import Any
-
 from ...error import GraphQLError
-from ...language import FieldNode
-from ...type import get_named_type, is_leaf_type
-from . import ValidationRule
-
-__all__ = ["ScalarLeafsRule"]
+from ...type.definition import is_leaf_type
+from .base import ValidationRule
 
 
-class ScalarLeafsRule(ValidationRule):
-    """Scalar leafs
+class ScalarLeafs(ValidationRule):
 
-    A GraphQL document is valid only if all leaf fields (fields without sub selections)
-    are of scalar or enum types.
-    """
+    def enter_Field(self, node, key, parent, path, ancestors):
+        type = self.context.get_type()
 
-    def enter_field(self, node: FieldNode, *_args: Any) -> None:
-        type_ = self.context.get_type()
-        if type_:
-            selection_set = node.selection_set
-            if is_leaf_type(get_named_type(type_)):
-                if selection_set:
-                    field_name = node.name.value
-                    self.report_error(
-                        GraphQLError(
-                            f"Field '{field_name}' must not have a selection"
-                            f" since type '{type_}' has no subfields.",
-                            selection_set,
-                        )
-                    )
-            elif not selection_set:
-                field_name = node.name.value
-                self.report_error(
-                    GraphQLError(
-                        f"Field '{field_name}' of type '{type_}'"
-                        " must have a selection of subfields."
-                        f" Did you mean '{field_name} {{ ... }}'?",
-                        node,
-                    )
-                )
+        if not type:
+            return
+
+        if is_leaf_type(type):
+            if node.selection_set:
+                self.context.report_error(GraphQLError(
+                    self.no_subselection_allowed_message(node.name.value, type),
+                    [node.selection_set]
+                ))
+
+        elif not node.selection_set:
+            self.context.report_error(GraphQLError(
+                self.required_subselection_message(node.name.value, type),
+                [node]
+            ))
+
+    @staticmethod
+    def no_subselection_allowed_message(field, type):
+        return 'Field "{}" of type "{}" must not have a sub selection.'.format(field, type)
+
+    @staticmethod
+    def required_subselection_message(field, type):
+        return 'Field "{}" of type "{}" must have a sub selection.'.format(field, type)

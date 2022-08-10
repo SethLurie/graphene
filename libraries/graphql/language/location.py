@@ -1,46 +1,30 @@
-from typing import Any, NamedTuple, TYPE_CHECKING
-
-try:
-    from typing import TypedDict
-except ImportError:  # Python < 3.8
-    from typing_extensions import TypedDict
-
-if TYPE_CHECKING:
-    from .source import Source  # noqa: F401
-
-__all__ = ["get_location", "SourceLocation", "FormattedSourceLocation"]
+__all__ = ['get_location', 'SourceLocation']
 
 
-class FormattedSourceLocation(TypedDict):
-    """Formatted source location"""
+class SourceLocation(object):
+    __slots__ = 'line', 'column'
 
-    line: int
-    column: int
+    def __init__(self, line, column):
+        self.line = line
+        self.column = column
 
+    def __repr__(self):
+        return '<SourceLocation line={} column={}>'.format(self.line, self.column)
 
-class SourceLocation(NamedTuple):
-    """Represents a location in a Source."""
-
-    line: int
-    column: int
-
-    @property
-    def formatted(self) -> FormattedSourceLocation:
-        return dict(line=self.line, column=self.column)
-
-    def __eq__(self, other: Any) -> bool:
-        if isinstance(other, dict):
-            return self.formatted == other
-        return tuple(self) == other
-
-    def __ne__(self, other: Any) -> bool:
-        return not self == other
+    def __eq__(self, other):
+        return (
+            isinstance(other, SourceLocation) and
+            self.line == other.line and
+            self.column == other.column
+        )
 
 
-def get_location(source: "Source", position: int) -> SourceLocation:
-    """Get the line and column for a character position in the source.
-
-    Takes a Source and a UTF-8 character offset, and returns the corresponding line and
-    column as a SourceLocation.
-    """
-    return source.get_location(position)
+def get_location(source, position):
+    lines = source.body[:position].splitlines()
+    if lines:
+        line = len(lines)
+        column = len(lines[-1]) + 1
+    else:
+        line = 1
+        column = 1
+    return SourceLocation(line, column)

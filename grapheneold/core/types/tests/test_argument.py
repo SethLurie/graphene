@@ -1,4 +1,4 @@
-from libraries.graphql.type import GraphQLArgument
+from .....libraries.graphql.type import GraphQLArgument
 from pytest import raises
 
 from grapheneold.core.schema import Schema

@@ -1,4 +1,4 @@
-from libraries.graphql.type import GraphQLObjectType
+from .....libraries.graphql.type import GraphQLObjectType
 from mock import patch
 
 from grapheneold import Schema, Interface

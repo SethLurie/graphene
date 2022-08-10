@@ -1,37 +1,32 @@
-from operator import attrgetter
-from typing import Any, Collection
-
 from ...error import GraphQLError
-from ...language import ArgumentNode, DirectiveNode, FieldNode
-from ...pyutils import group_by
-from . import ASTValidationRule
-
-__all__ = ["UniqueArgumentNamesRule"]
+from .base import ValidationRule
 
 
-class UniqueArgumentNamesRule(ASTValidationRule):
-    """Unique argument names
+class UniqueArgumentNames(ValidationRule):
+    __slots__ = 'known_arg_names',
 
-    A GraphQL field or directive is only valid if all supplied arguments are uniquely
-    named.
+    def __init__(self, context):
+        super(UniqueArgumentNames, self).__init__(context)
+        self.known_arg_names = {}
 
-    See https://spec.graphql.org/draft/#sec-Argument-Names
-    """
+    def enter_Field(self, node, key, parent, path, ancestors):
+        self.known_arg_names = {}
 
-    def enter_field(self, node: FieldNode, *_args: Any) -> None:
-        self.check_arg_uniqueness(node.arguments)
+    def enter_Directive(self, node, key, parent, path, ancestors):
+        self.known_arg_names = {}
 
-    def enter_directive(self, node: DirectiveNode, *args: Any) -> None:
-        self.check_arg_uniqueness(node.arguments)
+    def enter_Argument(self, node, key, parent, path, ancestors):
+        arg_name = node.name.value
 
-    def check_arg_uniqueness(self, argument_nodes: Collection[ArgumentNode]) -> None:
-        seen_args = group_by(argument_nodes, attrgetter("name.value"))
+        if arg_name in self.known_arg_names:
+            self.context.report_error(GraphQLError(
+                self.duplicate_arg_message(arg_name),
+                [self.known_arg_names[arg_name], node.name]
+            ))
+        else:
+            self.known_arg_names[arg_name] = node.name
+        return False
 
-        for arg_name, arg_nodes in seen_args.items():
-            if len(arg_nodes) > 1:
-                self.report_error(
-                    GraphQLError(
-                        f"There can be only one argument named '{arg_name}'.",
-                        [node.name for node in arg_nodes],
-                    )
-                )
+    @staticmethod
+    def duplicate_arg_message(field):
+        return 'There can only be one argument named "{}".'.format(field)

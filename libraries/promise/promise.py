@@ -5,7 +5,7 @@ from threading import RLock
 from types import TracebackType
 from weakref import WeakKeyDictionary
 
-from libraries.six import reraise  # type: ignore
+from ...libraries.six import reraise  # type: ignore
 from .async_ import Async
 from .compat import (
     Future,

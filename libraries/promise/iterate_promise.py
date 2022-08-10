@@ -6,7 +6,8 @@ if False:
 
 def iterate_promise(promise):
     # type: (Promise) -> Iterator
+    from ...libraries.promise import future
     if not promise.is_fulfilled:
-        yield from libraries.promise.future  # type: ignore
+        yield from future  # type: ignore
     assert promise.is_fulfilled
     return promise.get()

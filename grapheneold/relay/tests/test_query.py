@@ -1,5 +1,5 @@
 import pytest
-from libraries.graphql.type import GraphQLID, GraphQLNonNull
+from ....libraries.graphql.type import GraphQLID, GraphQLNonNull
 
 import grapheneold
 from grapheneold import relay, with_context

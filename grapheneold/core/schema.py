@@ -1,9 +1,9 @@
 import inspect
 
-from libraries.graphql import graphql
-from libraries.graphql.type import GraphQLSchema as _GraphQLSchema
-from libraries.graphql.utils.introspection_query import introspection_query
-from libraries.graphql.utils.schema_printer import print_schema
+from ...libraries.graphql import graphql
+from ...libraries.graphql.type import GraphQLSchema as _GraphQLSchema
+from ...libraries.graphql.utils.introspection_query import introspection_query
+from ...libraries.graphql.utils.schema_printer import print_schema
 
 from grapheneold import signals
 

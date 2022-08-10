@@ -1,6 +1,6 @@
 from itertools import chain
 
-from libraries.graphql.type import GraphQLArgument
+from ....libraries.graphql.type import GraphQLArgument
 
 from .base import ArgumentType, GroupNamedType, NamedType, OrderedType
 

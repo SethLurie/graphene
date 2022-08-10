@@ -1,5 +1,5 @@
-from libraries.promise import Promise
-from libraries.graphql.type import (
+from ....libraries.promise import Promise
+from ....libraries.graphql.type import (
     GraphQLArgument,
     GraphQLInputObjectField,
     GraphQLInputObjectType,
@@ -8,7 +8,7 @@ from libraries.graphql.type import (
     GraphQLString,
     GraphQLField,
 )
-from libraries.graphql.error import GraphQLError
+from ....libraries.graphql.error import GraphQLError
 from ..utils import resolve_maybe_thunk
 
 

@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-from libraries.graphql.type import GraphQLEnumType, GraphQLEnumValue
+from ...libraries.graphql.type import GraphQLEnumType, GraphQLEnumValue
 
 
 def enum_to_graphql_enum(enumeration):

@@ -1,40 +1,28 @@
-from typing import Any, Dict
-
 from ...error import GraphQLError
-from ...language import NameNode, FragmentDefinitionNode, VisitorAction, SKIP
-from . import ASTValidationContext, ASTValidationRule
-
-__all__ = ["UniqueFragmentNamesRule"]
+from .base import ValidationRule
 
 
-class UniqueFragmentNamesRule(ASTValidationRule):
-    """Unique fragment names
+class UniqueFragmentNames(ValidationRule):
+    __slots__ = 'known_fragment_names',
 
-    A GraphQL document is only valid if all defined fragments have unique names.
+    def __init__(self, context):
+        super(UniqueFragmentNames, self).__init__(context)
+        self.known_fragment_names = {}
 
-    See https://spec.graphql.org/draft/#sec-Fragment-Name-Uniqueness
-    """
+    def enter_OperationDefinition(self, node, key, parent, path, ancestors):
+        return False
 
-    def __init__(self, context: ASTValidationContext):
-        super().__init__(context)
-        self.known_fragment_names: Dict[str, NameNode] = {}
+    def enter_FragmentDefinition(self, node, key, parent, path, ancestors):
+        fragment_name = node.name.value
+        if fragment_name in self.known_fragment_names:
+            self.context.report_error(GraphQLError(
+                self.duplicate_fragment_name_message(fragment_name),
+                [self.known_fragment_names[fragment_name], node.name]
+            ))
+        else:
+            self.known_fragment_names[fragment_name] = node.name
+        return False
 
     @staticmethod
-    def enter_operation_definition(*_args: Any) -> VisitorAction:
-        return SKIP
-
-    def enter_fragment_definition(
-        self, node: FragmentDefinitionNode, *_args: Any
-    ) -> VisitorAction:
-        known_fragment_names = self.known_fragment_names
-        fragment_name = node.name.value
-        if fragment_name in known_fragment_names:
-            self.report_error(
-                GraphQLError(
-                    f"There can be only one fragment named '{fragment_name}'.",
-                    [known_fragment_names[fragment_name], node.name],
-                )
-            )
-        else:
-            known_fragment_names[fragment_name] = node.name
-        return SKIP
+    def duplicate_fragment_name_message(field):
+        return 'There can only be one fragment named "{}".'.format(field)

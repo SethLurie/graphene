@@ -1,48 +1,36 @@
-from typing import Any, Set
-
 from ...error import GraphQLError
-from ...language import OperationDefinitionNode, VariableDefinitionNode
-from . import ValidationContext, ValidationRule
-
-__all__ = ["NoUndefinedVariablesRule"]
+from .base import ValidationRule
 
 
-class NoUndefinedVariablesRule(ValidationRule):
-    """No undefined variables
+class NoUndefinedVariables(ValidationRule):
+    __slots__ = 'defined_variable_names',
 
-    A GraphQL operation is only valid if all variables encountered, both directly and
-    via fragment spreads, are defined by that operation.
+    def __init__(self, context):
+        self.defined_variable_names = set()
+        super(NoUndefinedVariables, self).__init__(context)
 
-    See https://spec.graphql.org/draft/#sec-All-Variable-Uses-Defined
-    """
+    @staticmethod
+    def undefined_var_message(var_name, op_name=None):
+        if op_name:
+            return 'Variable "${}" is not defined by operation "{}".'.format(
+                var_name, op_name
+            )
+        return 'Variable "${}" is not defined.'.format(var_name)
 
-    def __init__(self, context: ValidationContext):
-        super().__init__(context)
-        self.defined_variable_names: Set[str] = set()
+    def enter_OperationDefinition(self, operation, key, parent, path, ancestors):
+        self.defined_variable_names = set()
 
-    def enter_operation_definition(self, *_args: Any) -> None:
-        self.defined_variable_names.clear()
-
-    def leave_operation_definition(
-        self, operation: OperationDefinitionNode, *_args: Any
-    ) -> None:
+    def leave_OperationDefinition(self, operation, key, parent, path, ancestors):
         usages = self.context.get_recursive_variable_usages(operation)
-        defined_variables = self.defined_variable_names
-        for usage in usages:
-            node = usage.node
-            var_name = node.name.value
-            if var_name not in defined_variables:
-                self.report_error(
-                    GraphQLError(
-                        f"Variable '${var_name}' is not defined"
-                        f" by operation '{operation.name.value}'."
-                        if operation.name
-                        else f"Variable '${var_name}' is not defined.",
-                        [node, operation],
-                    )
-                )
 
-    def enter_variable_definition(
-        self, node: VariableDefinitionNode, *_args: Any
-    ) -> None:
+        for variable_usage in usages:
+            node = variable_usage.node
+            var_name = node.name.value
+            if var_name not in self.defined_variable_names:
+                self.context.report_error(GraphQLError(
+                    self.undefined_var_message(var_name, operation.name and operation.name.value),
+                    [node, operation]
+                ))
+
+    def enter_VariableDefinition(self, node, key, parent, path, ancestors):
         self.defined_variable_names.add(node.variable.name.value)

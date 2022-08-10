@@ -1,5 +1,5 @@
 
-from libraries.graphql.type import GraphQLObjectType
+from .....libraries.graphql.type import GraphQLObjectType
 
 from grapheneold.core.schema import Schema
 from grapheneold.core.types import String

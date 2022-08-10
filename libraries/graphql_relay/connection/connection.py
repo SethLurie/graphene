@@ -1,4 +1,4 @@
-from libraries.graphql.type import (
+from ....libraries.graphql.type import (
     GraphQLArgument,
     GraphQLBoolean,
     GraphQLInt,

@@ -5,8 +5,8 @@ from functools import wraps
 
 import libraries.six as six
 
-from libraries.graphql_relay.connection.arrayconnection import connection_from_list
-from libraries.graphql_relay.node.node import to_global_id
+from ...libraries.graphql_relay.connection.arrayconnection import connection_from_list
+from ...libraries.graphql_relay.node.node import to_global_id
 
 from ..core.classtypes import InputObjectType, Interface, Mutation, ObjectType
 from ..core.classtypes.interface import InterfaceMeta

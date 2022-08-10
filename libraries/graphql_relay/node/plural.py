@@ -1,5 +1,5 @@
-from libraries.promise import Promise
-from libraries.graphql.type import (
+from ....libraries.promise import Promise
+from ....libraries.graphql.type import (
     GraphQLArgument,
     GraphQLList,
     GraphQLNonNull,

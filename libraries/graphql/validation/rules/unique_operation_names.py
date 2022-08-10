@@ -1,42 +1,31 @@
-from typing import Any, Dict
-
 from ...error import GraphQLError
-from ...language import NameNode, OperationDefinitionNode, VisitorAction, SKIP
-from . import ASTValidationContext, ASTValidationRule
-
-__all__ = ["UniqueOperationNamesRule"]
+from .base import ValidationRule
 
 
-class UniqueOperationNamesRule(ASTValidationRule):
-    """Unique operation names
+class UniqueOperationNames(ValidationRule):
+    __slots__ = 'known_operation_names',
 
-    A GraphQL document is only valid if all defined operations have unique names.
+    def __init__(self, context):
+        super(UniqueOperationNames, self).__init__(context)
+        self.known_operation_names = {}
 
-    See https://spec.graphql.org/draft/#sec-Operation-Name-Uniqueness
-    """
-
-    def __init__(self, context: ASTValidationContext):
-        super().__init__(context)
-        self.known_operation_names: Dict[str, NameNode] = {}
-
-    def enter_operation_definition(
-        self, node: OperationDefinitionNode, *_args: Any
-    ) -> VisitorAction:
+    def enter_OperationDefinition(self, node, key, parent, path, ancestors):
         operation_name = node.name
-        if operation_name:
-            known_operation_names = self.known_operation_names
-            if operation_name.value in known_operation_names:
-                self.report_error(
-                    GraphQLError(
-                        "There can be only one operation"
-                        f" named '{operation_name.value}'.",
-                        [known_operation_names[operation_name.value], operation_name],
-                    )
-                )
-            else:
-                known_operation_names[operation_name.value] = operation_name
-        return SKIP
+        if not operation_name:
+            return
+
+        if operation_name.value in self.known_operation_names:
+            self.context.report_error(GraphQLError(
+                self.duplicate_operation_name_message(operation_name.value),
+                [self.known_operation_names[operation_name.value], operation_name]
+            ))
+        else:
+            self.known_operation_names[operation_name.value] = operation_name
+        return False
+
+    def enter_FragmentDefinition(self, node, key, parent, path, ancestors):
+        return False
 
     @staticmethod
-    def enter_fragment_definition(*_args: Any) -> VisitorAction:
-        return SKIP
+    def duplicate_operation_name_message(operation_name):
+        return 'There can only be one operation named "{}".'.format(operation_name)

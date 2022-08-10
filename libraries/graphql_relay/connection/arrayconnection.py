@@ -1,4 +1,4 @@
-from libraries.promise import Promise
+from ....libraries.promise import Promise
 
 from ..utils import base64, unbase64, is_str
 from .connectiontypes import Connection, PageInfo, Edge
