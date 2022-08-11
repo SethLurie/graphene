@@ -743,9 +743,9 @@ class Promise(Generic[T]):
     def promisify(cls, f):
         # type: (Callable) -> Callable[..., Promise]
         if not callable(f):
-            warn(
-                "Promise.promisify is now a function decorator, please use Promise.resolve instead."
-            )
+            # warn(
+            #     "Promise.promisify is now a function decorator, please use Promise.resolve instead."
+            # )
             return cls.resolve(f)
 
         @wraps(f)
